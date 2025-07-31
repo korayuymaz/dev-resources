@@ -21,4 +21,15 @@ export const typeDefs = gql`
 	type Query {
 		resources: [Resource!]!
 	}
+
+	input NewResourceInput {
+		title: String!
+		description: String!
+		url: String!
+		category: Category!
+	}
+
+	type Mutation {
+		createResource(data: NewResourceInput!): Resource!
+	}
 `;

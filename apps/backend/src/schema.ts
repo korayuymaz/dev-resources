@@ -29,7 +29,14 @@ export const typeDefs = gql`
 		category: Category!
 	}
 
+	type DeleteResourceResponse {
+		success: Boolean!
+		message: String
+	}
+
 	type Mutation {
 		createResource(data: NewResourceInput!): Resource!
+		toggleFavorite(id: ID!): Resource!
+		deleteResource(id: ID!): DeleteResourceResponse!
 	}
 `;

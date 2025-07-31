@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      lucide:
+        specifier: ^0.535.0
+        version: 0.535.0
       react:
         specifier: 19.1.0
         version: 19.1.0
@@ -2125,6 +2128,9 @@ packages:
   lru-cache@7.13.1:
     resolution: {integrity: sha512-CHqbAq7NFlW3RSnoWXLJBxCWaZVBrfa9UEHId2M3AW8iEBurbqduNexEUCGc3SHc6iCYXNJCDi903LajSVAEPQ==}
     engines: {node: '>=12'}
+
+  lucide@0.535.0:
+    resolution: {integrity: sha512-5ty7c45D+zH1vVzMy++NWdrFmo0pAnV4woNkKmoWyoHmTQ1jvyMPPCG4q78art8dbodrK0kVrw+nuQMz5vMpOQ==}
 
   magic-string@0.30.17:
     resolution: {integrity: sha512-sNPKHvyjVf7gyjwS4xGTaW/mCnF8wnjtifKBEhxfZ7E/S8tQ0rssrwGNn6q8JH/ohItJfSQp9mBtQYuTlH5QnA==}
@@ -5079,6 +5085,8 @@ snapshots:
       yallist: 4.0.0
 
   lru-cache@7.13.1: {}
+
+  lucide@0.535.0: {}
 
   magic-string@0.30.17:
     dependencies:

@@ -2,12 +2,10 @@
 	"extends": "../../tsconfig.base.json",
 	"compilerOptions": {
 		"outDir": "dist",
-		"target": "ES2022",
-		"module": "CommonJS",
-		"esModuleInterop": true,
-		"skipLibCheck": true,
-		"forceConsistentCasingInFileNames": true,
-		"moduleResolution": "node"
+		"rootDir": "src",
+		"module": "NodeNext",
+		"target": "es2019",
+		"esModuleInterop": true
 	},
-	"include": ["."]
+	"include": ["src/**/*"]
 }

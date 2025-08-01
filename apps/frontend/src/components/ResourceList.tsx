@@ -13,6 +13,8 @@ type Resource = {
 	title: string;
 	description: string;
 	url: string;
+	category: string;
+	isFavorite: boolean;
 };
 
 export default function ResourceList() {

@@ -19,6 +19,7 @@
 	"devDependencies": {
 		"apollo-server-plugin-base": "^3.7.2",
 		"daisyui": "^5.0.50",
+		"prisma": "^6.13.0",
 		"turbo": "^1.13.4",
 		"typescript": "^5.8.3"
 	},

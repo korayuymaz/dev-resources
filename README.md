@@ -40,6 +40,7 @@ pnpm install
 ```bash
 cd apps/backend
 npx prisma migrate dev --name init
+pnpm generate
 ```
 
 (Optional) Seed script can be added later.

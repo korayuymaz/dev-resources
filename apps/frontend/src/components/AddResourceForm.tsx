@@ -4,6 +4,7 @@ import { useMutation } from "@apollo/client";
 import { useState } from "react";
 import { GET_RESOURCES } from "@/graphql/queries";
 import { CREATE_RESOURCE } from "@/graphql/mutations";
+import { useSession } from "next-auth/react";
 
 type FormData = {
 	title: string;
@@ -13,6 +14,8 @@ type FormData = {
 };
 
 export default function AddResourceForm() {
+	const { data: session } = useSession();
+	const isAdmin = session?.user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL;
 	const [showForm, setShowForm] = useState(false);
 
 	const [formData, setFormData] = useState<FormData>({
@@ -42,78 +45,89 @@ export default function AddResourceForm() {
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
-		createResource({ variables: { data: formData } });
+		createResource({
+			variables: { data: formData },
+			context: {
+				headers: {
+					"x-user-email": session?.user?.email ?? "",
+				},
+			},
+		});
 	};
 
 	return (
 		<div className="flex flex-col gap-4 items-center relative">
-			<button
-				className="btn btn-primary w-56"
-				onClick={() => setShowForm(!showForm)}
-			>
-				{showForm ? "Hide Form" : "Add Resource"}
-			</button>
-			{showForm && (
-				<div className="absolute top-10 left-1/2 -translate-x-1/2 z-10 w-full md:w-1/3">
-					<form
-						onSubmit={handleSubmit}
-						className="max-w-xl mx-auto p-4 space-y-4 bg-base-100 rounded-lg shadow-md"
+			{isAdmin && (
+				<>
+					<button
+						className="btn btn-primary w-56"
+						onClick={() => setShowForm(!showForm)}
 					>
-						<h2 className="text-xl font-bold">Add a New Resource</h2>
+						{showForm ? "Hide Form" : "Add Resource"}
+					</button>
+					{showForm && (
+						<div className="absolute top-10 left-1/2 -translate-x-1/2 z-10 w-full md:w-1/3">
+							<form
+								onSubmit={handleSubmit}
+								className="max-w-xl mx-auto p-4 space-y-4 bg-base-100 rounded-lg shadow-md"
+							>
+								<h2 className="text-xl font-bold">Add a New Resource</h2>
 
-						<input
-							type="text"
-							name="title"
-							placeholder="Title"
-							className="input input-bordered w-full"
-							value={formData.title}
-							onChange={handleChange}
-							required
-						/>
+								<input
+									type="text"
+									name="title"
+									placeholder="Title"
+									className="input input-bordered w-full"
+									value={formData.title}
+									onChange={handleChange}
+									required
+								/>
 
-						<textarea
-							name="description"
-							placeholder="Description"
-							className="textarea textarea-bordered w-full"
-							value={formData.description}
-							onChange={handleChange}
-							required
-						/>
+								<textarea
+									name="description"
+									placeholder="Description"
+									className="textarea textarea-bordered w-full"
+									value={formData.description}
+									onChange={handleChange}
+									required
+								/>
 
-						<input
-							type="url"
-							name="url"
-							placeholder="https://example.com"
-							className="input input-bordered w-full"
-							value={formData.url}
-							onChange={handleChange}
-							required
-						/>
+								<input
+									type="url"
+									name="url"
+									placeholder="https://example.com"
+									className="input input-bordered w-full"
+									value={formData.url}
+									onChange={handleChange}
+									required
+								/>
 
-						<select
-							name="category"
-							className="select select-bordered w-full"
-							value={formData.category}
-							onChange={handleChange}
-						>
-							<option value="TOOL">Tool</option>
-							<option value="COURSE">Course</option>
-							<option value="DOCS">Docs</option>
-							<option value="VIDEO">Video</option>
-							<option value="UIKIT">UI Kit</option>
-						</select>
+								<select
+									name="category"
+									className="select select-bordered w-full"
+									value={formData.category}
+									onChange={handleChange}
+								>
+									<option value="TOOL">Tool</option>
+									<option value="COURSE">Course</option>
+									<option value="DOCS">Docs</option>
+									<option value="VIDEO">Video</option>
+									<option value="UIKIT">UI Kit</option>
+								</select>
 
-						<button
-							type="submit"
-							className="btn btn-primary w-full"
-							disabled={loading}
-						>
-							{loading ? "Adding..." : "Add Resource"}
-						</button>
+								<button
+									type="submit"
+									className="btn btn-primary w-full"
+									disabled={loading}
+								>
+									{loading ? "Adding..." : "Add Resource"}
+								</button>
 
-						{error && <p className="text-error">Error: {error.message}</p>}
-					</form>
-				</div>
+								{error && <p className="text-error">Error: {error.message}</p>}
+							</form>
+						</div>
+					)}
+				</>
 			)}
 		</div>
 	);

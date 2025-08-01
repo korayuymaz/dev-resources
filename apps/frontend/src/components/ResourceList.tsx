@@ -8,13 +8,21 @@ import { useState } from "react";
 
 const categories = ["ALL", "TOOL", "COURSE", "DOCS", "VIDEO", "UIKIT"];
 
+type Resource = {
+	id: string;
+	title: string;
+	description: string;
+	url: string;
+};
+
 export default function ResourceList() {
 	const [selectedCategory, setSelectedCategory] = useState<string>("ALL");
 	const [showFavorites, setShowFavorites] = useState(false);
 
 	const { data, loading, error } = useQuery(GET_RESOURCES, {
 		variables: {
-			category: selectedCategory === "ALL" ? null : (selectedCategory as any),
+			category:
+				selectedCategory === "ALL" ? null : (selectedCategory as string),
 			isFavorite: showFavorites ? true : undefined,
 		},
 	});
@@ -46,7 +54,7 @@ export default function ResourceList() {
 				{showFavorites ? "☆ Show All" : "★ Show Favorites"}
 			</button>
 			<ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-				{data.resources.map((res: any) => (
+				{data.resources.map((res: Resource) => (
 					<div key={res.id} className="card bg-base-100 w-96 shadow-sm">
 						<div className="card-body">
 							<div className="flex justify-between items-center">

@@ -1,6 +1,9 @@
+"use client";
+
 import { useMutation } from "@apollo/client";
 import { GET_RESOURCES } from "@/graphql/queries";
 import { TOGGLE_FAVORITE } from "@/graphql/mutations";
+import { useSession } from "next-auth/react";
 
 const FavoriteButton = ({
 	id,
@@ -9,12 +12,28 @@ const FavoriteButton = ({
 	id: string;
 	isFavorite: boolean;
 }) => {
+	const { data: session } = useSession();
 	const [toggleFavorite] = useMutation(TOGGLE_FAVORITE, {
 		refetchQueries: [GET_RESOURCES],
 	});
 
+	const handleToggleFavorite = () => {
+		if (!session?.user?.email) {
+			alert("Please login to favorite resources");
+			return;
+		}
+		toggleFavorite({
+			variables: { id: String(id) },
+			context: {
+				headers: {
+					"x-user-email": session?.user?.email ?? "",
+				},
+			},
+		});
+	};
+
 	return (
-		<button onClick={() => toggleFavorite({ variables: { id: String(id) } })}>
+		<button onClick={handleToggleFavorite}>
 			{isFavorite ? (
 				<svg
 					xmlns="http://www.w3.org/2000/svg"

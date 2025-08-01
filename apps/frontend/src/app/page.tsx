@@ -1,14 +1,16 @@
-import AddResourceForm from "@/components/AddResourceForm";
+"use client";
 import ResourceList from "@/components/ResourceList";
+import { SessionProvider } from "next-auth/react";
 
 export default function Home() {
 	return (
-		<div className="container mx-auto mt-10 flex flex-col gap-4 md:flex-row">
-			<div className="w-full">
-				<AddResourceForm />
-				<h1 className="text-2xl font-bold mb-4">Resource List</h1>
-				<ResourceList />
+		<SessionProvider>
+			<div className="container mx-auto mt-10 flex flex-col gap-4 md:flex-row">
+				<div className="w-full">
+					<h1 className="text-2xl font-bold mb-4">Resource List</h1>
+					<ResourceList />
+				</div>
 			</div>
-		</div>
+		</SessionProvider>
 	);
 }

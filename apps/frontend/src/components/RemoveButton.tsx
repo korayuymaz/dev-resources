@@ -1,9 +1,12 @@
+"use client";
 import { useMutation } from "@apollo/client";
 import { DELETE_RESOURCE } from "@/graphql/mutations";
 import { useState } from "react";
 import { GET_RESOURCES } from "@/graphql/queries";
+import { useSession } from "next-auth/react";
 
 export default function RemoveButton({ id }: { id: string }) {
+	const { data: session } = useSession();
 	const [deleteResource] = useMutation(DELETE_RESOURCE, {
 		refetchQueries: [GET_RESOURCES],
 	});
@@ -21,8 +24,19 @@ export default function RemoveButton({ id }: { id: string }) {
 	};
 
 	const handleDelete = () => {
+		if (!session?.user?.email) {
+			alert("Please login to delete resources");
+			return;
+		}
 		if (selectedId) {
-			deleteResource({ variables: { id: String(selectedId) } });
+			deleteResource({
+				variables: { id: String(selectedId) },
+				context: {
+					headers: {
+						"x-user-email": session?.user?.email ?? "",
+					},
+				},
+			});
 		}
 		closeModal();
 	};

@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-
+import { ApolloContext } from "./types";
 const prisma = new PrismaClient();
 
 export const resolvers = {

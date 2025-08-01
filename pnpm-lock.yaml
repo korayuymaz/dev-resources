@@ -21,6 +21,9 @@ importers:
         specifier: 19.1.0
         version: 19.1.0(react@19.1.0)
     devDependencies:
+      apollo-server-plugin-base:
+        specifier: ^3.7.2
+        version: 3.7.2(graphql@16.11.0)
       daisyui:
         specifier: ^5.0.50
         version: 5.0.50

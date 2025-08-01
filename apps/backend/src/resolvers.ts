@@ -4,7 +4,17 @@ const prisma = new PrismaClient();
 
 export const resolvers = {
 	Query: {
-		resources: async () => prisma.resource.findMany(),
+		resources: async (
+			_: any,
+			{ category, isFavorite }: { category?: string; isFavorite?: boolean }
+		) => {
+			return prisma.resource.findMany({
+				where: {
+					...(category ? { category: category as any } : {}),
+					...(typeof isFavorite === "boolean" ? { isFavorite } : {}),
+				},
+			});
+		},
 	},
 	Mutation: {
 		createResource: async (_: any, { data }: any) => {

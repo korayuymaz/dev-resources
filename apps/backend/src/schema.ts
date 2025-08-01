@@ -19,7 +19,7 @@ export const typeDefs = gql`
 	}
 
 	type Query {
-		resources: [Resource!]!
+		resources(category: Category, isFavorite: Boolean): [Resource!]!
 	}
 
 	input NewResourceInput {

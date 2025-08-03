@@ -11,12 +11,14 @@ A modern web application for managing and discovering development resources. Bui
 - **Authentication**: NextAuth integration for user authentication
 - **Modern UI**: Beautiful interface built with Tailwind CSS and DaisyUI
 - **Real-time Updates**: GraphQL-powered real-time data updates
+- **MongoDB Storage**: Persistent data storage with MongoDB
 
 ## 🛠️ Tech Stack
 
 - **Frontend**: Next.js 15, React 19, TypeScript
 - **Styling**: Tailwind CSS 4, DaisyUI
-- **Data Layer**: Apollo Client, GraphQL
+- **Data Layer**: Apollo Client, GraphQL API
+- **Database**: MongoDB
 - **Authentication**: NextAuth.js
 - **Development**: ESLint, PostCSS
 
@@ -24,7 +26,8 @@ A modern web application for managing and discovering development resources. Bui
 
 - Node.js (v18 or higher)
 - npm or yarn
-- GraphQL backend (configured separately)
+- MongoDB database (local or cloud instance)
+- GraphQL API server (configured separately)
 
 ## 🚀 Getting Started
 
@@ -53,8 +56,8 @@ NEXTAUTH_SECRET=your-secret-key-here
 # Admin Configuration
 NEXT_PUBLIC_ADMIN_EMAIL=admin@example.com
 
-# GraphQL Endpoint
-NEXT_PUBLIC_GRAPHQL_ENDPOINT=http://localhost:4000/graphql
+# GraphQL API Endpoint
+NEXT_PUBLIC_GRAPHQL_API=http://localhost:4000/graphql
 ```
 
 ### 4. Run the Development Server
@@ -129,13 +132,14 @@ The application uses NextAuth.js for authentication:
 - **Admin Access**: Role-based access control
 - **Secure Routes**: Protected admin functionality
 
-## 📊 GraphQL Integration
+## 📊 GraphQL & MongoDB Integration
 
-The application uses Apollo Client for GraphQL operations:
+The application uses Apollo Client to connect to a GraphQL API that interfaces with MongoDB:
 
-- **Queries**: Fetch resources with filtering
-- **Mutations**: Create, update, and delete resources
+- **Queries**: Fetch resources with filtering from MongoDB
+- **Mutations**: Create, update, and delete resources in MongoDB
 - **Real-time Updates**: Automatic cache updates
+- **Authentication**: User email passed via headers for authorization
 
 ## 🚀 Deployment
 
